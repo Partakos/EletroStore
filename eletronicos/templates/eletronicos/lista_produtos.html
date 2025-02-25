@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} EletroStore - Produtos {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        {% for produto in produtos %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                {% if produto.imagem %}
+                <img src="{{ produto.imagem.url }}" class="card-img-top" alt="{{ produto.nome }}">
+                {% else %}
+                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Imagem indisponível">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ produto.nome }}</h5>
+                    <p class="card-text">R$ {{ produto.preco }}</p>
+                    <p class="card-text">{{ produto.descricao|truncatewords:20 }}</p>
+
+                    <!-- Botão Detalhes -->
+                    <a href="{% url 'detalhe_produto' produto_id=produto.id %}" class="btn btn-info">Detalhes</a>
+
+                    <!-- Botão Adicionar ao Carrinho -->
+                    <form action="{% url 'adicionar_ao_carrinho' produto_id=produto.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Adicionar ao Carrinho</button>
+                    </form>
+
+                    <!-- Botão Comprar -->
+                    <form action="{% url 'comprar' produto_id=produto.id %}" method="get" class="d-inline">
+                        <button type="submit" class="btn btn-success">Comprar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

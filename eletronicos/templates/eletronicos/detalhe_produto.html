@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ produto.nome }} {% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <!-- Imagem do produto -->
+            {% if produto.imagem %}
+            <img src="{{ produto.imagem.url }}" class="img-fluid" alt="{{ produto.nome }}">
+            {% else %}
+            <img src="https://via.placeholder.com/500" class="img-fluid" alt="Imagem indisponível">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h1>{{ produto.nome }}</h1>
+            <p>{{ produto.descricao }}</p>
+            <h3>R$ {{ produto.preco }}</h3>
+
+            <!-- Botões de ação -->
+            <div class="d-grid gap-2">
+                <!-- Botão de Adicionar ao Carrinho -->
+                <form action="{% url 'adicionar_ao_carrinho' produto_id=produto.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-lg">Adicionar ao Carrinho</button>
+                </form>
+
+                <!-- Botão de Comprar -->
+                <form action="{% url 'comprar' produto_id=produto.id %}" method="get">
+                    <button type="submit" class="btn btn-success btn-lg mt-3">Comprar</button>
+                </form>
+                
+                <!-- Botão de Voltar -->
+                <a href="{% url 'lista_produtos' %}" class="btn btn-secondary btn-lg mt-3">Voltar</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

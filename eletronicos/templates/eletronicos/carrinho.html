@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho de Compras</title>
+</head>
+<body>
+    <h1>Carrinho de Compras</h1>
+
+    {% if itens %}
+        <ul>
+            {% for item in itens %}
+                <li>
+                    <strong>{{ item.produto.nome }}</strong><br>
+                    Quantidade: {{ item.quantidade }}<br>
+                    Preço: R$ {{ item.produto.preco }}<br>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <hr>
+        <h3>Total: R$ 
+            {% with total=0 %}
+                {% for item in itens %}
+                    {% with total=total + item.produto.preco|multiply:item.quantidade %}
+                        {% endwith %}
+                {% endfor %}
+                {{ total }}
+            {% endwith %}
+        </h3>
+
+        <br>
+        <a href="{% url 'comprar' produto_id=itens.0.produto.id %}">Finalizar Compra</a>
+    {% else %}
+        <p>Seu carrinho está vazio.</p>
+    {% endif %}
+</body>
+</html>
