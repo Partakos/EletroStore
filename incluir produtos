@@ -1,0 +1,31 @@
+python manage.py shell
+
+
+from eletronicos.models import Produto
+ 
+# Deletando todos os produtos antigos
+Produto.objects.all().delete()
+ 
+# Criando os novos produtos com descrição
+produto1 = Produto.objects.create(
+    nome="Teclado Mecânico", 
+    preco=150.00, 
+    imagem="teclado.jpg", 
+    descricao="Teclado mecânico com switches mecânicos para uma experiência de digitação mais precisa e confortável."
+)
+ 
+produto2 = Produto.objects.create(
+    nome="Mouse Gamer", 
+    preco=120.00, 
+    imagem="mouse.jpg", 
+    descricao="Mouse gamer com sensor de alta precisão e iluminação RGB personalizável."
+)
+ 
+produto3 = Produto.objects.create(
+    nome="Monitor 24''", 
+    preco=900.00, 
+    imagem="monitor.jpg", 
+    descricao="Monitor de 24 polegadas com resolução Full HD e tempo de resposta rápido."
+)
+ 
+print("Novos produtos cadastrados com sucesso!")
