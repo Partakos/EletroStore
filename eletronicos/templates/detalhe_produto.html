@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} {{ produto.nome }} {% endblock %}
 
@@ -7,7 +8,7 @@
     <div class="row">
         <div class="col-md-6">
             {% if produto.imagem %}
-            <img src="{{ produto.imagem.url }}" class="img-fluid" alt="{{ produto.nome }}">
+            <img src="{% static 'images/' %}{{ produto.imagem }}" class="img-fluid" alt="{{ produto.nome }}">
             {% endif %}
         </div>
         <div class="col-md-6">
